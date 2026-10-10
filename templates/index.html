@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}Ayana Chenalew | Full-Stack Developer{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section id="about" class="py-20 md:py-28 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+    
+    <!-- Left Column: Text & CTA Buttons -->
+    <div class="lg:w-7/12 space-y-6 text-center lg:text-left">
+        
+        <!-- Status Badge -->
+        <div class="inline-flex items-center gap-2 bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Hojii & Internship-f Qophiidha
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight text-white">
+            Full-Stack Solutions <br>
+            <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Python, Web & Mobile
+            </span>
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+"I am Ayana, a versatile Full-Stack Software Engineer skilled in Python (Flask/Django), Java, JavaScript, and PHP. I specialize in building fast, scalable web applications, robust SQL databases (PostgreSQL/SQLite), and mobile apps (Android/Capacitor), as well as lightweight Java ME solutions."        </p>
+
+        <!-- Tech Pills -->
+        <div class="flex flex-wrap justify-center lg:justify-start gap-2 pt-2">
+            <span class="bg-gray-900 border border-gray-800 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md">🐍 Python (Flask/Django)</span>
+            <span class="bg-gray-900 border border-gray-800 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md">🗄️ PostgreSQL / SQLite</span>
+            <span class="bg-gray-900 border border-gray-800 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md">📱 Android / Capacitor</span>
+            <span class="bg-gray-900 border border-gray-800 text-gray-300 text-xs font-medium px-3 py-1.5 rounded-md">⚡ RESTful APIs</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+            <a href="#projects" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200">
+                see projects &rarr;
+            </a>
+            <a href="#contact" class="bg-gray-900 hover:bg-gray-800 text-gray-200 font-semibold px-6 py-3.5 rounded-xl border border-gray-800 transition duration-200">
+                contact me
+            </a>
+        </div>
+    </div>
+
+    <!-- Right Column: Card Graphic -->
+    <div class="lg:w-5/12 flex justify-center w-full">
+        <div class="relative w-72 h-72 md:w-88 md:h-88 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-2xl shadow-indigo-500/10">
+            <div class="w-full h-full bg-gray-900 rounded-[23px] flex flex-col justify-between p-8 text-center border border-gray-800/80">
+                <div class="space-y-4 my-auto">
+                    <!-- Avatar Badge -->
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-indigo-600/20 flex items-center justify-center text-indigo-400 text-2xl font-bold border border-indigo-500/30">
+                        AC
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Ayana Chenalew</h3>
+                        <p class="text-sm text-indigo-400 font-medium">Full-Stack Software Engineer</p>
+                    </div>
+                    <div class="pt-2 text-xs text-gray-400 flex items-center justify-center gap-2">
+                        <span>📍 Ethiopia</span>
+                        <span>•</span>
+                        <span>💻 Python / Dev</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projects" class="py-16 space-y-8 border-t border-gray-900">
+    <div class="text-center space-y-2">
+        <h2 class="text-3xl font-bold text-white">Pirojeektiilee Koomee</h2>
+        <p class="text-gray-400 text-sm">Hojiiwwan backend fi full-stack koo kan kuusaa daataa (SQLite) irraa dhufan.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% if projects %}
+            {% for project in projects %}
+            <div class="bg-gray-900/90 rounded-2xl border border-gray-800 p-6 space-y-4 hover:border-indigo-500/50 transition duration-300 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-white">{{ project.title }}</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        {{ project.description }}
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        {% for tech in project.tech_stack.split(',') %}
+                        <span class="text-xs bg-indigo-950/80 text-indigo-300 px-2.5 py-1 rounded-md border border-indigo-800/50">
+                            {{ tech.strip() }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-800/80 flex justify-between items-center text-sm font-medium">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="text-gray-300 hover:text-white flex items-center gap-1">
+                        GitHub &rarr;
+                    </a>
+                    {% endif %}
+                    {% if project.live_demo %}
+                    <a href="{{ project.live_demo }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                        Live Demo &rarr;
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Message yoo database empty ta'e -->
+            <div class="col-span-full bg-gray-900/50 border border-dashed border-gray-800 rounded-2xl p-8 text-center text-gray-500">
+                Ammaaf pirojeektiin kuusaa daataa keessa hin jiru. Python shell fayyadamnee haa daballu!
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CONTACT FORM SECTION -->
+<section id="contact" class="py-20 border-t border-gray-900">
+    <div class="max-w-2xl mx-auto bg-gray-900/90 border border-gray-800 rounded-3xl p-8 md:p-10 shadow-2xl space-y-6">
+        
+        <div class="text-center space-y-2">
+            <h2 class="text-3xl font-bold text-white">Ergaa Naaf Ergi</h2>
+            <p class="text-gray-400 text-sm">Hojii, pirojeektiilee, ykn yaada yoo qabaatte ergaa kee naaf barreessi.</p>
+        </div>
+
+        <!-- Form Action Route /contact tiin walqabata -->
+        <form action="/contact" method="POST" class="space-y-5">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Maqaa Keessan</label>
+                <input type="text" id="name" name="name" required placeholder="Fakkeenya: Caalaa Bultum" 
+                       class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Teessoo Email</label>
+                <input type="email" id="email" name="email" required placeholder="example@gmail.com" 
+                       class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+            </div>
+
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Ergaa Keessan</label>
+                <textarea id="message" name="message" rows="4" required placeholder="Waa'ee pirojeekti keetii naaf barreessi..." 
+                          class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-indigo-600/25 transition duration-200">
+                Ergaa Ergi &rarr;
+            </button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

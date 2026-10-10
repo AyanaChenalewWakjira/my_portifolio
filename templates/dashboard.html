@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="py-10 space-y-12">
+    <div class="flex justify-between items-center border-b border-gray-800 pb-5">
+        <h1 class="text-3xl font-bold text-white">Admin Dashboard</h1>
+        <a href="/logout" class="bg-red-600/80 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">
+            Logout
+        </a>
+    </div>
+
+    <!-- Section 1: Project Haaraa Dabaluu -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-indigo-400">Pirojeekti Haaraa Dabali</h2>
+        <form action="/add_project" method="POST" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="title" placeholder="Title Pirojeektichaa" required class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+                <input type="text" name="tech_stack" placeholder="Tech Stack (e.g. Python, Flask, SQL)" required class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+            </div>
+            <textarea name="description" placeholder="Ibsa pirojeektichaa..." required class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200"></textarea>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="url" name="github_link" placeholder="GitHub URL" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+                <input type="url" name="live_demo" placeholder="Live Demo URL" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+            </div>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-semibold transition">
+                Pirojeekti Maxxansi
+            </button>
+        </form>
+    </div>
+
+    <!-- Section 2: Ergaawwan Dhuftan (Messages) -->
+    <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-white">Ergaawwan Dhuftan (Contact Messages)</h2>
+        <div class="space-y-3">
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center text-sm text-gray-400">
+                        <span class="font-bold text-white">{{ msg.name }} ({{ msg.email }})</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">{{ msg.message }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-500 text-sm">Ergaan dhufe ammas hin jiru.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
