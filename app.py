@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'my-portfolio-secret-key-12345'
@@ -122,10 +123,8 @@ def contact():
         flash('Ergaa keetiif galatoomi! Dafeen si quunnama.', 'success')
         return redirect(url_for('home'))
     
-    
-    
-    
-
-if __name__ == '__main__':
-    app.run(debug=True)
+ if __name__ == '__main__':
+    # Render environment variable PORT jedhu kenna, yoo hin jirre 5000 fayyadama
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
     
