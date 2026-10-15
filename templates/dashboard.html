@@ -1,52 +1,167 @@
 {% extends 'base.html' %}
 
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Admin Dashboard | Ayana Chenalew{% endblock %}
 
 {% block content %}
 <div class="py-10 space-y-12">
-    <div class="flex justify-between items-center border-b border-gray-800 pb-5">
-        <h1 class="text-3xl font-bold text-white">Admin Dashboard</h1>
-        <a href="/logout" class="bg-red-600/80 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">
-            Logout
+    
+    <!-- Dashboard Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-800 pb-5">
+        <div>
+            <h1 class="text-3xl font-black text-white">Admin Dashboard</h1>
+            <p class="text-xs text-gray-400 mt-1">Manage your portfolio projects and view contact messages.</p>
+        </div>
+        <a href="/logout" class="bg-red-600/80 hover:bg-red-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-red-600/20">
+            <span>🚪 Logout</span>
         </a>
     </div>
 
-    <!-- Section 1: Project Haaraa Dabaluu -->
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
-        <h2 class="text-xl font-bold text-indigo-400">Pirojeekti Haaraa Dabali</h2>
+    <!-- Section 1: Project Haaraa Dabaluu (Add Project Form) -->
+    <div class="glass-card bg-gray-900/90 border border-gray-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-xl">
+        <div class="space-y-1">
+            <h2 class="text-xl font-bold text-indigo-400 flex items-center gap-2">
+                <span>⚡ Add New Project</span>
+            </h2>
+            <p class="text-xs text-gray-400">Fill in the details below to add a new project to your featured works.</p>
+        </div>
+
         <form action="/add_project" method="POST" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="title" placeholder="Title Pirojeektichaa" required class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
-                <input type="text" name="tech_stack" placeholder="Tech Stack (e.g. Python, Flask, SQL)" required class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Project Title</label>
+                    <input type="text" name="title" placeholder="Ex: Smart Home Finder" required 
+                           class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Tech Stack</label>
+                    <input type="text" name="tech_stack" placeholder="Python, Flask, Tailwind, SQLite" required 
+                           class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
             </div>
-            <textarea name="description" placeholder="Ibsa pirojeektichaa..." required class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200"></textarea>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1.5">Project Description</label>
+                <textarea name="description" rows="3" placeholder="Ibsa gabaabaa pirojeektichaa..." required 
+                          class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"></textarea>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="url" name="github_link" placeholder="GitHub URL" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
-                <input type="url" name="live_demo" placeholder="Live Demo URL" class="bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-200">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">GitHub URL (Optional)</label>
+                    <input type="url" name="github_link" placeholder="https://github.com/..." 
+                           class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Live Demo URL (Optional)</label>
+                    <input type="url" name="live_demo" placeholder="https://..." 
+                           class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
             </div>
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-semibold transition">
-                Pirojeekti Maxxansi
+
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl text-sm shadow-lg shadow-indigo-600/25 transition duration-200 flex items-center gap-2">
+                <span>Submit Project</span>
+                <span>&rarr;</span>
             </button>
         </form>
     </div>
 
-    <!-- Section 2: Ergaawwan Dhuftan (Messages) -->
+    <!-- Section 2: Pirojeektoota Jiran Bulchuu (Manage Existing Projects - Edit & Delete) -->
+    <div class="glass-card bg-gray-900/90 border border-gray-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-xl">
+        <div class="space-y-1">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>🛠️ Manage Projects</span>
+            </h2>
+            <p class="text-xs text-gray-400">Edit or delete existing projects from your portfolio database.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-300">
+                <thead class="bg-gray-950 text-xs text-gray-400 uppercase border-b border-gray-800">
+                    <tr>
+                        <th class="p-3">Title</th>
+                        <th class="p-3">Tech Stack</th>
+                        <th class="p-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800/60">
+                    {% if projects %}
+                        {% for project in projects %}
+                        <tr>
+                            <td class="p-3 font-semibold text-white">{{ project.title }}</td>
+                            <td class="p-3 text-xs text-indigo-300">{{ project.tech_stack }}</td>
+                            <td class="p-3 text-right flex justify-end gap-2">
+                                <!-- Toggle Edit Accordion Button -->
+                                <button type="button" onclick="document.getElementById('edit-modal-{{ project.id }}').classList.toggle('hidden')" 
+                                        class="bg-indigo-950/80 hover:bg-indigo-900 text-indigo-300 border border-indigo-800/80 text-xs px-3 py-1.5 rounded-lg transition">
+                                    ✏️ Edit
+                                </button>
+                                
+                                <!-- Delete Form -->
+                                <form action="/delete_project/{{ project.id }}" method="POST" onsubmit="return confirm('Pirojeektii kana haquuf mirkaneessitaa?');" class="inline">
+                                    <button type="submit" class="bg-red-950/80 hover:bg-red-900 text-red-300 border border-red-800/80 text-xs px-3 py-1.5 rounded-lg transition">
+                                        🗑️ Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <!-- Inline Edit Form (Hidden by Default) -->
+                        <tr id="edit-modal-{{ project.id }}" class="hidden bg-gray-950/80">
+                            <td colspan="3" class="p-4 border-t border-b border-indigo-900/50">
+                                <form action="/edit_project/{{ project.id }}" method="POST" class="space-y-3">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <input type="text" name="title" value="{{ project.title }}" required class="bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white">
+                                        <input type="text" name="tech_stack" value="{{ project.tech_stack }}" required class="bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white">
+                                        <input type="url" name="github_link" value="{{ project.github_link or '' }}" placeholder="GitHub URL" class="bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white">
+                                        <input type="url" name="live_demo" value="{{ project.live_demo or '' }}" placeholder="Live Demo URL" class="bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white">
+                                    </div>
+                                    <textarea name="description" required class="w-full bg-gray-900 border border-gray-800 rounded-lg px-3 py-2 text-xs text-white h-20">{{ project.description }}</textarea>
+                                    <div class="flex justify-end gap-2">
+                                        <button type="button" onclick="document.getElementById('edit-modal-{{ project.id }}').classList.add('hidden')" class="bg-gray-800 text-gray-300 text-xs px-3 py-1.5 rounded-lg">Cancel</button>
+                                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded-lg">Save Changes</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="p-6 text-center text-gray-500 text-xs">
+                                No projects found in the database.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 3: Ergaawwan Dhuftan (Messages) -->
     <div class="space-y-4">
-        <h2 class="text-2xl font-bold text-white">Ergaawwan Dhuftan (Contact Messages)</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                <span>📬 Contact Messages</span>
+            </h2>
+        </div>
+
         <div class="space-y-3">
             {% if messages %}
                 {% for msg in messages %}
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl space-y-2">
-                    <div class="flex justify-between items-center text-sm text-gray-400">
-                        <span class="font-bold text-white">{{ msg.name }} ({{ msg.email }})</span>
+                <div class="glass-card bg-gray-900/90 border border-gray-800 p-5 rounded-2xl space-y-2 hover:border-gray-700 transition">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="font-bold text-indigo-300">{{ msg.name }}</span>
+                        <span class="text-xs text-gray-500 bg-gray-950 px-3 py-1 rounded-full border border-gray-800">{{ msg.email }}</span>
                     </div>
-                    <p class="text-gray-300 text-sm">{{ msg.message }}</p>
+                    <p class="text-gray-300 text-sm leading-relaxed pt-1">{{ msg.message }}</p>
                 </div>
                 {% endfor %}
             {% else %}
-                <p class="text-gray-500 text-sm">Ergaan dhufe ammas hin jiru.</p>
+                <div class="glass-card bg-gray-900/50 border border-dashed border-gray-800 p-8 rounded-2xl text-center text-gray-500 text-sm">
+                    No new messages available.
+                </div>
             {% endif %}
         </div>
     </div>
+
 </div>
 {% endblock %}
